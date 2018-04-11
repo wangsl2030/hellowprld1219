@@ -7,6 +7,7 @@ Created on 2018-4-2
 from train.traindata import PK10TrainData as PK10TrainData
 #import train.traindata.TrainData as TrainData
 from settings import POSITION_MAX,PERIOD_MAX_LEN,PERIOD_MIN_LEN,PERIOD_STEP
+import time
 
 class PatternPositionPeriod:
     def __init__(self):
@@ -17,7 +18,18 @@ class PatternPositionPeriod:
         self.pattern_period_max = 0
         self.pattern_period_min = 0
         self.pattern_period = []
+        
+    def show_pattern(self,count_num):
+        print 'count:'+str(self.pattern_count)
+        timeArray = time.localtime(self.pattern_last_apperance)
+        print 'last_apperance:'+time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+        print 'period_min:'+str(self.pattern_period_min)
+        print 'period_max:'+str(self.pattern_period_max)
+        print 'period_avg:'+str(self.pattern_period_average)
 
+        for i in range(count_num):
+            print str(self.pattern_period[i])+',',
+            
 class PatternPositionDict:
     def __init__(self):
         self.pattern_data = {}
@@ -59,10 +71,19 @@ class PatternPositionDict:
                 if _period < _pattern.pattern_period_min:
                     _pattern.pattern_period_min = _period
                 _cur_apperance = item.period_date
+                if _pattern.pattern_period_min < 0:
+                    print item.period_num
+                    _pattern.pattern_period_min = 0
+                    pass
             if _pattern.pattern_count > 0:
                 _pattern.pattern_period_average = float(_period_total) / float(_pattern.pattern_count)
         pass
-    
+    def get_pattern(self,pattern_name):
+        if self.pattern_data.has_key(pattern_name):
+            return self.pattern_data[pattern_name]
+        else:
+            return None
+            
 class PatternPosition:
     def __init__(self):
         self.pattern_data = {}
@@ -75,6 +96,9 @@ class PatternPosition:
             _pattern_pp = PatternPositionDict()
             _pattern_pp.init_pattern(i,train_data)
             self.pattern_data[i] = _pattern_pp
+    
+    def get_pattern(self,pattern_name):
+        return self.pattern_data[len(pattern_name)].get_pattern(pattern_name)
 
 class PatternPeriod:
     def __init__(self):
@@ -91,7 +115,10 @@ class PatternPeriod:
         for i in range(self.range_num):
             self.init_pattern_position_period(i,train_data[i])
         pass
-   
+    
+    def get_pattern(self,pattern_name,pattern_position):
+        return self.pattern[pattern_position].get_pattern(pattern_name)
+        
 class Pattern:
     def __init__(self):
         _pk10_train_data = PK10TrainData()
@@ -102,6 +129,9 @@ class Pattern:
         self.pattern_period = PatternPeriod()
         self.pattern_period.init_pattern_period(self.train_data)
         pass
+        
+    def get_pattern(self,pattern_name,pattern_position=0):
+        return self.pattern_period.get_pattern(pattern_name,pattern_position)
 
 if __name__ == '__main__':
     _pattern = Pattern()

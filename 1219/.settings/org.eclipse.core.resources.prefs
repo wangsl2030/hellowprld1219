@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding//database/datasource.py=utf-8
+encoding//database/filter.py=utf-8
+encoding//pattern/pattern.py=utf-8
+encoding//train/traindata.py=utf-8
+encoding//verify/verifypattern.py=utf-8
+encoding/settings.py=utf-8

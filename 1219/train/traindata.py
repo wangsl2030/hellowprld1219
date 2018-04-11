@@ -14,7 +14,7 @@ class PK10TrainData:
         self.period_step_len = PERIOD_STEP
         self.range_num = POSITION_MAX
         self.raw_data = PK10RawData()
-        self.raw_data.read_Pk10_rawdata('../pk10_500000.txt')
+        self.raw_data.read_Pk10_rawdata('../xxx.txt')
         self.train_data = []
         for i in range(self.range_num):
             self.train_data.append([])
@@ -44,6 +44,7 @@ class PK10TrainData:
             self.train_data[i] = _data_source
 
 if __name__ == '__main__':
+
     pk10_train_data = PK10TrainData()
     pk10_train_data.update_train_data()
     pass

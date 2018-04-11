@@ -127,5 +127,5 @@ class PK10RawData:
         
 if __name__ == '__main__':
     raw_data = PK10RawData()
-    raw_data.read_Pk10_rawdata('../pk10.txt')
+    raw_data.read_Pk10_rawdata('../xxx.txt')
     pass
